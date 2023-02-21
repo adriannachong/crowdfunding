@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   // State
@@ -6,6 +7,9 @@ function LoginForm() {
     username: "",
     password: "",
   });
+
+  // Hooks
+  const navigate = useNavigate();
 
   // Actions
   const handleChange = (event) => {
@@ -17,18 +21,26 @@ function LoginForm() {
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (credentials.username && credentials.password) {
-      fetch(`${import.meta.env.VITE_API_URL}api-token-auth/`, {
+  const postData = async () => {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}api-token-auth/`,
+      {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(credentials),
-      }).then((response) => {
-        console.log(response.json());
-      });
+      }
+    );
+    return response.json();
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (credentials.username && credentials.password) {
+      const { token } = await postData();
+      window.localStorage.setItem("token", token);
+      navigate("/");
     }
   };
 

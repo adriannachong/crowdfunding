@@ -13,7 +13,7 @@ function HomePage() {
         return results.json();
       })
       .then((data) => {
-        setProjectList(data.results);
+        setProjectList(data);
       });
   }, []);
 
