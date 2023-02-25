@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 function LoginForm() {
+  const [, setLoggedIn] = useOutletContext();
+
   // State
   const [credentials, setCredentials] = useState({
     username: "",
@@ -13,17 +15,16 @@ function LoginForm() {
 
   // Actions
   const handleChange = (event) => {
-    const { id, value } = event.target;
+    // plugging to the input - event is passed into it
+    const { id, value } = event.target; // get target of event which is the input
 
-    setCredentials((prevCredentials) => ({
-      ...prevCredentials,
-      [id]: value,
-    }));
-  };
+    setCredentials((prevCredentials) => ({ ...prevCredentials, [id]: value }));
+  }; // this is an explicit return.
 
   const postData = async () => {
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}api-token-auth/`,
+      // `${import.meta.env.VITE_API_URL}users/<int:pk>/`,
       {
         method: "post",
         headers: {
@@ -34,13 +35,17 @@ function LoginForm() {
     );
     return response.json();
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (credentials.username && credentials.password) {
       const { token } = await postData();
-      window.localStorage.setItem("token", token);
-      navigate("/");
+      if (token !== undefined) {
+        window.localStorage.setItem("token", token);
+        setLoggedIn(true);
+        navigate("/");
+      } else {
+        setLoggedIn(false);
+      }
     }
   };
 
@@ -51,8 +56,8 @@ function LoginForm() {
         <input
           type="text"
           id="username"
-          onChange={handleChange}
           placeholder="Enter username"
+          onChange={handleChange}
         />
       </div>
       <div>
@@ -60,8 +65,8 @@ function LoginForm() {
         <input
           type="password"
           id="password"
-          onChange={handleChange}
           placeholder="Password"
+          onChange={handleChange}
         />
       </div>
       <button type="submit">Login</button>
