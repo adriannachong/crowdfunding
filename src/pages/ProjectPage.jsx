@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import "./Pages.css";
 // Dummy data
-import { oneProject } from "../data";
+// import { oneProject } from "../data";
 import PledgeForm from "../components/PledgeForm/PledgeForm";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 
@@ -61,4 +62,4 @@ function ProjectPage() {
 
 export default ProjectPage;
 
-// async file. asynchronous function
+// async file asynchronous function
