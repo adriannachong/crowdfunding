@@ -1,0 +1,33 @@
+:root {
+    --heading-font: "Montserrat", sans-serif;
+    --body-font: "Poppins", sans-serif;
+  }
+  
+  .create-project-form-wrapper {
+    margin-top: 100px;
+    color: #6c6c6c;
+  }
+  
+  h2 {
+    font-family: var(--heading-font);
+    font-weight: 500;
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .create-project {
+    text-align: center;
+    color: #6c6c6c;
+  }
+  .create-project h3 {
+    font-family: var(--heading-font);
+  }
+  
+  .create-project p {
+    font-family: var(--body-font);
+  }
+  
+  .create-project a {
+    text-decoration: none;
+    color: rgb(60, 179, 171);
+  }
